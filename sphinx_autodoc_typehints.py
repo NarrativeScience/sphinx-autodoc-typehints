@@ -101,6 +101,10 @@ def format_annotation(annotation):
                                               for param in annotation.__parameters__))
 
         return ':py:class:`~{}.{}`{}'.format(annotation.__module__, annotation.__qualname__, extra)
+    elif (inspect.isfunction(annotation) and
+            annotation.__qualname__.split('.')[0] == 'NewType'):
+        return ':py:class:`~.{}` (:py:class:`{}`)'.format(
+            annotation.__name__, annotation.__supertype__)
     else:
         return str(annotation)
 
